@@ -12,41 +12,37 @@ var pokemonRepository = (function () {
   }
 
   function addListItem(pokemon) {
-    var $pokemonList = $('.pokemon-list');
-    var $listItem = $('<li></li>');
-    //create button element and add innerText
-    var $pokemonButton = $('<button class="pokemon-list__button">' + item.name + '</button>');
-    //append button
-    $listItem.append($pokemonButton);
-    //select list and append listItem
-    $pokemonList.append($listItem);
-    //event listener for button
-    $pokemonButton.on('click', function() {
+    var pokemonList = $('.pokemon-list');
+    var listItem = $('<li></li>'); // Create li element containing a button forEach Pokémon
+    var pokemonButton = $('<button class="pokemon-list__button">' + pokemon.name + '</button>');
+    listItem.append(pokemonButton); // appendChild button to list
+    pokemonList.append(listItem); // appendChild listItem to ul
+    pokemonButton.on('click' , function() {
       showDetails(pokemon);
     });
   }
 
   function loadList() {
-    $.ajax(apiUrl, {dataType: 'json'}).then(function(response) {
-      $.each(result, function (item) {
+    return $.ajax(apiUrl, {dataType: 'json'}).then(function (response) { // Return key to fetch(GET) complete pokemon list
+      $.each(response.results, function (item) {
         var pokemon = {
           name: item.name,
           detailsUrl: item.url
         };
-        add(pokemon);
+        add(pokemon); // Add each pokemon from results to repository variable
       });
-    }).catch(function(err) {
+    }).catch(function (e) {
       console.error(e);
-    });
+    })
   }
 
-  function loadDetails(item) {
+  function loadDetails(item) { // Expects parameter with pokemon object as parameter
     var url = item.detailsUrl;
-    return $.ajax(url).then(function (response) {
+    return $.ajax(url).then(function (details) {
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
       item.types = Object.keys(details.types);
-    }).catch(function(err) {
+    }).catch(function (e) {
       console.error(e);
     });
   }
@@ -62,69 +58,70 @@ var pokemonRepository = (function () {
     getAll: getAll,
     addListItem: addListItem,
     loadList: loadList,
-    loadDetails: loadDetails
+    loadDetails: loadDetails,
+    showDetails: showDetails
   };
 })(); // IIFE ends here!
 
 
-/*******************
-UNABLE TO SOLVE ERROR: Uncaught TypeError: Cannot read property 'then' of undefined at scripts.js:73
-********************/
 pokemonRepository.loadList().then(function() {
-  var pokemonItem = pokemonRepository.getAll();
-  $.each(pokemonItem, function(pokemon) {
-    addListItem(pokemon);
+  pokemonRepository.getAll().forEach(function(pokemon){
+    pokemonRepository.addListItem(pokemon);
   });
 });
 
+
 var modalWindow = (function() {
-  var $modalContainer = $('#modal-container');
+  var modalContainer = $('#modal-container');
+
     // Modal content creation
     function showModal(title, img, text) {
 
       // Clear existing modal content
-      $modalContainer.innerHTML = '';
+      modalContainer.innerHTML = '';
 
-      // Create div element and class
+      // Create div element
       var modal = $('<div class="modal"></div>');
 
-      // Create nameElement and innerText
+      // Create nameElement
       var nameElement = $('<h2>' + title + '</h2>');
 
-      // Create heightElement and innerText
-      var heightElement = $('<p>Height: ' + text + '0 cm</p>')
+      // Create heightElement
+      var heightElement = $('<p>height: ' + text + '0 cm</p>');
 
-      // Create imageElement and class
-      var imageElement = $('<img class="pokemon-image" alt="pokemon image">');
+      // Create imageElement
+      var imageElement = $('<img class="pokemon-image"></img>');
       imageElement.attr('src', img);
 
       // Add new modal content
       // Create closeButton
-      var closeButtonElement = $('<button class="modal-close">close</button>')
-      closeButtonElement.on('click', hideModal);
+      var closeButtonElement = $('<button class="modal-close">close</button>');
+      closeButtonElement.on('click', hideModal); // EventListener to close/hideModal
 
-      // Append children
-      modal.append(nameElement).append(heightElement).append(imageElement).append(closeButtonElement);
-      //Add class and append modal
-      $modalContainer.append(modal).addClass('is-visible');
+      // Append allChildren to page
+      modal.append(nameElement);
+      modal.append(heightElement);
+      modal.append(imageElement);
+      modal.append(closeButtonElement);
+      modalContainer.append(modal).addClass('is-visible'); // Add showModal class (visible)
     }
 
       // Hide modal when closeButton is clicked
       function hideModal() {
-        $modalContainer.removeClass('is-visible');
+        modalContainer.removeClass('is-visible');
       }
 
       // hide Modal when ESC key pressed
       $(window).on('keydown', (e) => {
-          if (e.key === 'Escape' && $modalContainer.hasClass('is-visible')) {
+          if (e.key === 'Escape' && modalContainer.hasClass('is-visible')) {
             hideModal();
           }
       });
 
       // Hide modal if overlay is clicked. Currently not working properly due to size, could not find fix yet!
-      $modalContainer.on('click', (e) => {
-        var target = e.target;
-          if (target === $modalContainer) {
+      modalContainer.on('click', (e) => {
+        var target = $(e.target);
+          if (target.is(modalContainer)) {
             hideModal();
           }
       });
