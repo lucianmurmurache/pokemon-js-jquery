@@ -81,6 +81,10 @@ h2 {
   border-radius: 7px;
 }
 
+.modal-close:hover {
+  cursor: pointer;
+}
+
 .pokemon-image {
   margin: 1% auto;
   height: 150px;
