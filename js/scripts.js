@@ -64,13 +64,6 @@ var pokemonRepository = (function () {
 })(); // IIFE ends here!
 
 
-pokemonRepository.loadList().then(function() {
-  pokemonRepository.getAll().forEach(function(pokemon){
-    pokemonRepository.addListItem(pokemon);
-  });
-});
-
-
 var modalWindow = (function() {
   var modalContainer = $('#modal-container');
 
@@ -133,8 +126,12 @@ var modalWindow = (function() {
 })(); // IIFE ends here!
 
 
-
-
+pokemonRepository.loadList().then(function() {
+  var pokemonAll = pokemonRepository.getAll();
+    $.each(pokemonAll, function(pokemon) {
+      pokemonRepository.addListItem(pokemon);
+    });
+});
 
 
 
