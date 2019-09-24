@@ -107,8 +107,7 @@ h2 {
 
 .pokemon-list__button {
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  transition-property: color;
-  transition-duration: 0.4s;
+  transition: all 0.7s ease 0s;
   background: #FCCF00;
   border-radius: 7px;
   padding: 10px 18px;
@@ -125,6 +124,10 @@ h2 {
 }
 
 .pokemon-list__button:hover {
+  background: linear-gradient(#f00000 50%, #fff 50%);
+  transition: all 0.8s ease 0s;
+  border-radius: 50%;
+  border-color: #000;
   cursor: pointer;
   opacity: 0.9;
 }
