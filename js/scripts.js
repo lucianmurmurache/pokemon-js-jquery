@@ -24,7 +24,7 @@ var pokemonRepository = (function () {
 
   function loadList() {
     return $.ajax(apiUrl, {dataType: 'json'}).then(function (response) { // Return key to fetch(GET) complete pokemon list
-      $.each(response.results, function (item) {
+      $.each(response.results, function (index, item) {
         var pokemon = {
           name: item.name,
           detailsUrl: item.url
@@ -97,17 +97,19 @@ var modalWindow = (function() {
       modal.append(imageElement);
       modal.append(closeButtonElement);
       modalContainer.append(modal).addClass('is-visible'); // Add showModal class (visible)
-    }
+    };
 
       // Hide modal when closeButton is clicked
       function hideModal() {
         modalContainer.removeClass('is-visible');
+         $('.modal').remove(); //Remove previously opened modal
       }
 
       // hide Modal when ESC key pressed
       $(window).on('keydown', (e) => {
           if (e.key === 'Escape' && modalContainer.hasClass('is-visible')) {
             hideModal();
+             $('#modal-container').modal
           }
       });
 
@@ -128,7 +130,7 @@ var modalWindow = (function() {
 
 pokemonRepository.loadList().then(function() {
   var pokemonAll = pokemonRepository.getAll();
-    $.each(pokemonAll, function(pokemon) {
+    $.each(pokemonAll, function(index, pokemon) {
       pokemonRepository.addListItem(pokemon);
     });
 });
