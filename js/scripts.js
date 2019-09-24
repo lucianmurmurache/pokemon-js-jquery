@@ -80,7 +80,7 @@ var modalWindow = (function() {
       var nameElement = $('<h2>' + title + '</h2>');
 
       // Create heightElement
-      var heightElement = $('<p>height: ' + text + '0 cm</p>');
+      var heightElement = $('<p>Height: ' + text + '0 cm</p>');
 
       // Create imageElement
       var imageElement = $('<img class="pokemon-image"></img>');
