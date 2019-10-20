@@ -40,7 +40,9 @@ var pokemonRepository = (function () {
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
       item.weight = details.weight;
-      item.types = Object.keys(details.types);
+      item.types = details.types.map(function(pokemon){
+        return pokemon.type.name;
+      });
     }).catch(function (e) {
       console.error(e);
     });
@@ -53,11 +55,11 @@ var pokemonRepository = (function () {
         // NameElement
         var nameElement = $('.modal-title').text(item.name.charAt(0).toUpperCase() + item.name.slice(1));
         // HeightElement
-        var heightElement = $('<p class="pokemon-height"></p>').text('Height: ' + item.height + '0 cm');
+        var heightElement = $('<p class="pokemon-height"></p>').text('Height: ' + item.height + '0 cm.');
         //WeightElement
-        var weightElement = $('<p class="pokemon-weight"></p>').text('Weight: ' + item.weight + '00 grams');
+        var weightElement = $('<p class="pokemon-weight"></p>').text('Weight: ' + item.weight + '00 grams.');
         //TypeElement
-        var typeElement = $('<p class="pokemon-type"></p>').text('Type: ' + item.types);
+        var typeElement = $('<p class="pokemon-type"></p>').text('Type: ' + item.types + '.');
         // ImageElement
         var imageElement = $('<img class="pokemon-img">');
         imageElement.attr('src', item.imageUrl);
