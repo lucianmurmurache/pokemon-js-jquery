@@ -61,7 +61,7 @@ var pokemonRepository = (function () {
         // ImageElement
         var imageElement = $('<img class="pokemon-img">');
         imageElement.attr('src', item.imageUrl);
-
+        // Remove content once modal is closed
         if(modalContainer.children().length) {
         modalContainer.children().remove();
         }
