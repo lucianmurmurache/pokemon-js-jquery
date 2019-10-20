@@ -1,11 +1,11 @@
 # pokemon-js-jquery.
 
-## simple js pokedex for the purpose of practicing whilst progressing through the CF course content.
+## Simple js pokedex for the purpose of practicing whilst progressing through the CF course content.
 
-### contains list of 150 pokemon items.
+### Contains list of 150 pokemon items.
 
-#### modals used to show each item name, height and image.
+#### Modals used to show each item name, height and image.
 
-##### using JQuery library!
+##### Using Bootstrap framework!
 
-###### no rights reserved!
+###### No rights reserved!
