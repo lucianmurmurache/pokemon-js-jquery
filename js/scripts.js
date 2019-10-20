@@ -1,7 +1,7 @@
 // IIFE begins here!
 var pokemonRepository = (function () {
   var repository = [];
-    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150'; // Data from external source
+  var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150'; // Data from external source
 
   function add(pokemon) {
     repository.push(pokemon);
@@ -13,11 +13,9 @@ var pokemonRepository = (function () {
 
   function addListItem(pokemon) {
     var pokemonList = $('.pokemon-list');
-    var listItem = $('<li></li>'); // Create li element containing a button forEach Pokémon
-    var pokemonButton = $('<button class="pokemon-list__button">' + pokemon.name + '</button>');
-    listItem.append(pokemonButton); // appendChild button to list
-    pokemonList.append(listItem); // appendChild listItem to ul
-    pokemonButton.on('click' , function() {
+    var listItem = $('<button type="button" class="pokemon-list__button list-group-item list-group-item-action" data-toggle="modal" data-target="#modal-item">' + pokemon.name + '</button>');
+    pokemonList.append(listItem);
+    listItem.on('click' , function() {
       showDetails(pokemon);
     });
   }
@@ -41,6 +39,7 @@ var pokemonRepository = (function () {
     return $.ajax(url).then(function (details) {
       item.imageUrl = details.sprites.front_default;
       item.height = details.height;
+      item.weight = details.weight;
       item.types = Object.keys(details.types);
     }).catch(function (e) {
       console.error(e);
@@ -49,7 +48,30 @@ var pokemonRepository = (function () {
 
   function showDetails(item) {
     pokemonRepository.loadDetails(item).then(function () {
-      modalWindow.showModal(item.name, item.imageUrl, item.height);
+      // Modal content creation
+        var modalContainer = $('.modal-body');
+        // NameElement
+        var nameElement = $('.modal-title').text(item.name.charAt(0).toUpperCase() + item.name.slice(1));
+        // HeightElement
+        var heightElement = $('<p class="pokemon-height"></p>').text('Height: ' + item.height + '0 cm');
+        //WeightElement
+        var weightElement = $('<p class="pokemon-weight"></p>').text('Weight: ' + item.weight + '00 grams');
+        //TypeElement
+        var typeElement = $('<p class="pokemon-type"></p>').text('Type: ' + item.types);
+        // ImageElement
+        var imageElement = $('<img class="pokemon-img">');
+        imageElement.attr('src', item.imageUrl);
+
+        if(modalContainer.children().length) {
+        modalContainer.children().remove();
+        }
+
+        //Append all items to modalBody
+        modalContainer.append(nameElement);
+        modalContainer.append(heightElement);
+        modalContainer.append(weightElement);
+        modalContainer.append(typeElement);
+        modalContainer.append(imageElement);
     });
   }
 
@@ -63,71 +85,6 @@ var pokemonRepository = (function () {
   };
 })(); // IIFE ends here!
 
-
-var modalWindow = (function() {
-  var modalContainer = $('#modal-container');
-
-    // Modal content creation
-    function showModal(title, img, text) {
-
-      // Clear existing modal content
-      modalContainer.innerHTML = '';
-
-      // Create div element
-      var modal = $('<div class="modal"></div>');
-
-      // Create nameElement
-      var nameElement = $('<h2>' + title + '</h2>');
-
-      // Create heightElement
-      var heightElement = $('<p>Height: ' + text + '0 cm</p>');
-
-      // Create imageElement
-      var imageElement = $('<img class="pokemon-image"></img>');
-      imageElement.attr('src', img);
-
-      // Add new modal content
-      // Create closeButton
-      var closeButtonElement = $('<button class="modal-close">close</button>');
-      closeButtonElement.on('click', hideModal); // EventListener to close/hideModal
-
-      // Append allChildren to page
-      modal.append(nameElement);
-      modal.append(heightElement);
-      modal.append(imageElement);
-      modal.append(closeButtonElement);
-      modalContainer.append(modal).addClass('is-visible'); // Add showModal class (visible)
-    };
-
-      // Hide modal when closeButton is clicked
-      function hideModal() {
-        modalContainer.removeClass('is-visible');
-         $('.modal').remove(); //Remove previously opened modal
-      }
-
-      // hide Modal when ESC key pressed
-      $(window).on('keydown', (e) => {
-          if (e.key === 'Escape' && modalContainer.hasClass('is-visible')) {
-            hideModal();
-             $('#modal-container').modal
-          }
-      });
-
-      // Hide modal if overlay is clicked. Currently not working properly due to size, could not find fix yet!
-      modalContainer.on('click', (e) => {
-        var target = $(e.target);
-          if (target.is(modalContainer)) {
-            hideModal();
-          }
-      });
-
-      return {
-        showModal: showModal,
-        hideModal: hideModal
-      };
-})(); // IIFE ends here!
-
-
 pokemonRepository.loadList().then(function() {
   var pokemonAll = pokemonRepository.getAll();
     $.each(pokemonAll, function(index, pokemon) {
@@ -136,32 +93,40 @@ pokemonRepository.loadList().then(function() {
 });
 
 
-
+//Pokemon filter
+$(document).ready(function(){
+  $('#search-pokemon').on('keyup', function(){
+    var value = $(this).val().toLowerCase();
+    $('.pokemon-list__button').filter(function(){
+      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    });
+  });
+});
 
 //Use when needed
 /* javascript: (function() {
-	var elements = document.body.getElementsByTagName('*');
-	var items = [];
-	for (var i = 0; i < elements.length; i++) {
-		if (elements[i].innerHTML.indexOf('* { background:#000!important;color:#0f0!important;outline:solid #f00 1px!important; background-color: rgba(255,0,0,.2) !important; }') != -1) {
-			items.push(elements[i]);
-		}
-	}
-	if (items.length > 0) {
-		for (var i = 0; i < items.length; i++) {
-			items[i].innerHTML = '';
-		}
-	} else {
-		document.body.innerHTML +=
-			'<style>* { background:#000!important;color:#0f0!important;outline:solid #f00 1px!important; background-color: rgba(255,0,0,.2) !important; }\
-            * * { background-color: rgba(0,255,0,.2) !important; }\
-            * * * { background-color: rgba(0,0,255,.2) !important; }\
-            * * * * { background-color: rgba(255,0,255,.2) !important; }\
-            * * * * * { background-color: rgba(0,255,255,.2) !important; }\
-            * * * * * * { background-color: rgba(255,255,0,.2) !important; }\
-            * * * * * * * { background-color: rgba(255,0,0,.2) !important; }\
-            * * * * * * * * { background-color: rgba(0,255,0,.2) !important; }\
-            * * * * * * * * * { background-color: rgba(0,0,255,.2) !important; }</style>';
-	}
+var elements = document.body.getElementsByTagName('*');
+var items = [];
+for (var i = 0; i < elements.length; i++) {
+if (elements[i].innerHTML.indexOf('* { background:#000!important;color:#0f0!important;outline:solid #f00 1px!important; background-color: rgba(255,0,0,.2) !important; }') != -1) {
+items.push(elements[i]);
+}
+}
+if (items.length > 0) {
+for (var i = 0; i < items.length; i++) {
+items[i].innerHTML = '';
+}
+} else {
+document.body.innerHTML +=
+'<style>* { background:#000!important;color:#0f0!important;outline:solid #f00 1px!important; background-color: rgba(255,0,0,.2) !important; }\
+* * { background-color: rgba(0,255,0,.2) !important; }\
+* * * { background-color: rgba(0,0,255,.2) !important; }\
+* * * * { background-color: rgba(255,0,255,.2) !important; }\
+* * * * * { background-color: rgba(0,255,255,.2) !important; }\
+* * * * * * { background-color: rgba(255,255,0,.2) !important; }\
+* * * * * * * { background-color: rgba(255,0,0,.2) !important; }\
+* * * * * * * * { background-color: rgba(0,255,0,.2) !important; }\
+* * * * * * * * * { background-color: rgba(0,0,255,.2) !important; }</style>';
+}
 })();
 */
