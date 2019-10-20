@@ -83,3 +83,18 @@ h2 {
   background-color: #FCCF00;
   opacity: 0.5;
 }
+
+.modal-title {
+  font-size: 24px;
+}
+
+.pokemon-height,
+.pokemon-weight,
+.pokemon-type {
+  font-size: 22px;
+  text-align: left;
+}
+
+.pokemon-img {
+  height: 170px;
+}
