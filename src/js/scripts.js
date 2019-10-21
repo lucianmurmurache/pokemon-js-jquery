@@ -1,7 +1,7 @@
 // IIFE begins here!
 var pokemonRepository = (function() {
     var repository = [];
-    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150'; // Data from external source
+    var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
     function add(pokemon) {
         repository.push(pokemon);
@@ -72,15 +72,15 @@ var pokemonRepository = (function() {
             );
             // HeightElement
             var heightElement = $('<p class="pokemon-height"></p>').text(
-                'Height: ' + item.height + '0 cm.'
+                'Height: ' + item.height + '0 cm'
             );
             //WeightElement
             var weightElement = $('<p class="pokemon-weight"></p>').text(
-                'Weight: ' + item.weight + '00 grams.'
+                'Weight: ' + item.weight + '00 grams'
             );
             //TypeElement
             var typeElement = $('<p class="pokemon-type"></p>').text(
-                'Type: ' + item.types + '.'
+                'Type: ' + item.types
             );
             // ImageElement
             var imageElement = $('<img class="pokemon-img">');
