@@ -1,11 +1,11 @@
 # pokemon-js-jquery.
 
-## Simple js pokedex for the purpose of practicing whilst progressing through the CF course content.
+## [Demo](https://lucianmurmurache.github.io/pokemon-js-jquery/index.html)
 
-### Contains list of 150 pokemon items.
+### Simple JavaScript Pokedex app, built using JQuery.
 
-#### Modals used to show each item name, height and image.
+#### It contains list of 150 pokemon items.
 
-##### Using Bootstrap framework!
+##### Modals used to show each item name, height and image.
 
-###### No rights reserved!
+##### Use of Bootstrap framework.
