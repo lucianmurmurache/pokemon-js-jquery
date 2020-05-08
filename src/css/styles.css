@@ -115,6 +115,16 @@ h2 {
   margin: -35px;
 }
 
+.social-media {
+  display: block;
+  margin: 5% auto 1% auto ;
+  text-align: center;
+}
+
+.social-media img {
+  margin: 0 1% 0 1%;
+}
+
 @media all and (max-width: 555px) {
   .pokemon-logo img {
     margin-top: 200px;

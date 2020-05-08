@@ -9,33 +9,35 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="dist/css/styles.min.css">
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="dist/img/favicon.ico" type="image/x-icon">
   <title>Pokédex</title>
 </head>
 
 <body>
-  <!-- Search pokemon-->
-  <nav class="navbar fixed-top ml-auto">
-    <div>
-      <a class="navbar-brand" href="https://github.com/lucianmurmurache/pokemon-js-jquery" target="_blank">
-        <img src="img/pokedex_vector.png" alt="Pokedex logo">
+  <header>
+    <!-- Search pokemon-->
+    <nav class="navbar fixed-top ml-auto">
+      <div>
+        <a class="navbar-brand" href="https://github.com/lucianmurmurache/pokemon-js-jquery" target="_blank">
+          <img src="img/pokedex_vector.png" alt="Pokedex logo">
+        </a>
+      </div>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" id="search-pokemon" type="search" placeholder="Filter by name.."
+          aria-label="Search">
+        <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
+          Reset search
+        </button>
+      </form>
+    </nav>
+
+    <!-- Pokemon logo -->
+    <div class="pokemon-logo">
+      <a href="https://github.com/lucianmurmurache/pokemon-js-jquery" target="_blank">
+        <img src="img/pokemon-logo.png" alt="Pokemon-Logo">
       </a>
     </div>
-    <form class="form-inline">
-      <input class="form-control mr-sm-2" id="search-pokemon" type="search" placeholder="Filter by name.."
-        aria-label="Search">
-      <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">
-        Reset search
-      </button>
-    </form>
-  </nav>
-
-  <!-- Pokemon logo -->
-  <div class="pokemon-logo">
-    <a href="https://github.com/lucianmurmurache/pokemon-js-jquery" target="_blank">
-      <img src="img/pokemon-logo.png" alt="Pokemon-Logo">
-    </a>
-  </div>
+  </header>
 
   <!--list-->
   <div class="pokemon-list"></div>
@@ -59,6 +61,17 @@
     </div>
   </div>
 
+  <footer>
+    <div class="social-media">
+      <a href="https://github.com/lucianmurmurache/pokemon-js-jquery" aria-label="Repository Github link">
+        <img src="dist/img/github.png" alt="Social media - github logo">
+      </a>
+      <a href="https://de.linkedin.com/in/lucian-murmurache-88155473" aria-label="LinkedIn profile link">
+        <img src="dist/img/linkedin.png" alt="Social media - linkedin logo">
+      </a>
+    </div>
+  </footer>
+
   <!-- JQuery, Popper.js, Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> <!-- JQuery -->
@@ -70,9 +83,9 @@
     crossorigin="anonymous"></script> <!-- Bootstrap -->
 
   <!--Promise-polyfill -->
-  <script src="src/js/promise-polyfill.js"></script>
+  <script src="dist/js/promise-polyfill.js"></script>
   <!-- Fetch-polyfill -->
-  <script src="src/js/fetch-polyfill.js"></script>
+  <script src="dist/js/fetch-polyfill.js"></script>
   <!-- Javascript -->
   <script src="dist/js/scripts.min.js"></script>
 </body>

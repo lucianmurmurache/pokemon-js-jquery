@@ -83,10 +83,11 @@ const pokemonRepository = (function () {
             }
 
             //Append all items to modalBody
-            modalContainer.append(nameElement);
-            modalContainer.append(heightElement);
-            modalContainer.append(typeElement);
-            modalContainer.append(imageElement);
+            modalContainer
+                .append(nameElement)
+                .append(heightElement)
+                .append(typeElement)
+                .append(imageElement);
         });
     }
 
